@@ -1,0 +1,74 @@
+specVersion: v0.1.0
+package:
+  name: polymarket
+  version: v0.1.0
+  description: "Polymarket Substreams - Extract and process events from Polymarket contracts on Polygon"
+  url: "https://github.com/Polymarket/polymarket-substreams"
+
+imports:
+    ethcommon: https://spkg.io/streamingfast/ethereum-common-v0.3.0.spkg
+
+protobuf:
+  files:
+    - contract.proto
+  importPaths:
+    - ./proto
+  excludePaths:
+    - sf/substreams
+    - google
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: ./target/wasm32-unknown-unknown/release/substreams.wasm
+
+modules:
+  # CTF Exchange Events
+  - name: map_ctf_exchange_events
+    kind: map
+    initialBlock: 33605403
+    blockFilter:
+      module: ethcommon:index_events
+      query:
+        string: evt_addr:0x4bfb41d5b3570defd03c39a9a4d8de6bd8b8982e
+    inputs:
+      - source: sf.ethereum.type.v2.Block
+    output:
+      type: proto:contract.v1.CtfExchangeEvents
+
+  # Conditional Tokens Framework Events
+  - name: map_ctf_events
+    kind: map
+    initialBlock: 33605403
+    blockFilter:
+      module: ethcommon:index_events
+      query:
+        string: evt_addr:0x4D97DCd97eC945f40cF65F87097ACe5EA0476045
+    inputs:
+      - source: sf.ethereum.type.v2.Block
+    output:
+      type: proto:contract.v1.CtfEvents
+
+  # USDC Collateral Token Events
+  - name: map_usdc_events
+    kind: map
+    initialBlock: 33605403
+    blockFilter:
+      module: ethcommon:index_events
+      query:
+        string: evt_addr:0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174
+    inputs:
+      - source: sf.ethereum.type.v2.Block
+    output:
+      type: proto:contract.v1.UsdcEvents
+
+  # Combined Trading Data
+  - name: map_trading_data
+    kind: map
+    initialBlock: 33605403
+    inputs:
+      - source: sf.ethereum.type.v2.Block
+    output:
+      type: proto:contract.v1.TradingData
+
+network: polygon

@@ -1,0 +1,11 @@
+{
+  "testName": "Polymarket CTF Exchange Events Test",
+  "description": "Test the CTF Exchange events extraction",
+  "modules": [
+    {
+      "name": "map_ctf_exchange_events",
+      "startBlock": 50000000,
+      "stopBlock": 50000100
+    }
+  ]
+}
