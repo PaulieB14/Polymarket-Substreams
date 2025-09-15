@@ -3,7 +3,8 @@ package:
   name: polymarket
   version: v0.1.0
   description: "Polymarket Substreams - Extract and process events from Polymarket contracts on Polygon"
-  url: "https://github.com/Polymarket/polymarket-substreams"
+  url: "https://github.com/PaulieB14/Polymarket-Substreams"
+  image: "./polymarket-icon.png"
 
 imports:
     ethcommon: https://spkg.io/streamingfast/ethereum-common-v0.3.0.spkg
